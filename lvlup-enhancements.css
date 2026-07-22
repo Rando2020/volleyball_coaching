@@ -1,0 +1,617 @@
+/* LVL Up brand and service expansion */
+:root {
+  --lvl-navy: #07111f;
+  --lvl-navy-soft: #0d1d31;
+  --lvl-blue: #2767ff;
+  --lvl-lime: #c9f31d;
+  --lvl-cream: #f5f2e9;
+}
+
+.brand-mark {
+  width: 46px;
+  border-radius: 12px;
+  background: var(--lvl-lime);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 0;
+  line-height: 1.05;
+}
+
+.brand-copy strong {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 0.94rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.brand-copy small {
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero {
+  min-height: min(900px, calc(100vh - var(--header-height)));
+}
+
+.hero h1 {
+  font-size: clamp(3.2rem, 6.6vw, 7rem);
+}
+
+.hero .accent-line {
+  color: var(--lvl-blue);
+}
+
+.hero-proof {
+  gap: 18px 28px;
+}
+
+.court-card.lvl-court-card {
+  min-height: 540px;
+  background:
+    radial-gradient(circle at 70% 15%, rgba(201, 243, 29, 0.2), transparent 28%),
+    linear-gradient(145deg, #102b59, #07111f 70%);
+}
+
+.court-card.lvl-court-card::after {
+  display: none;
+}
+
+.accurate-court-wrap {
+  position: absolute;
+  inset: 70px 28px 125px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  perspective: 900px;
+}
+
+.accurate-court {
+  width: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 28px 28px rgba(0, 0, 0, 0.28));
+  transform: rotateX(7deg) rotateZ(-3deg);
+  transform-origin: center;
+}
+
+.accurate-court .free-zone {
+  fill: rgba(39, 103, 255, 0.16);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 7;
+}
+
+.accurate-court .court-floor {
+  fill: #286cf2;
+  stroke: #ffffff;
+  stroke-width: 10;
+}
+
+.accurate-court .front-zone {
+  fill: rgba(201, 243, 29, 0.14);
+}
+
+.accurate-court .court-line {
+  stroke: #ffffff;
+  stroke-width: 10;
+  vector-effect: non-scaling-stroke;
+}
+
+.accurate-court .net-line {
+  stroke: var(--lvl-lime);
+  stroke-width: 16;
+  vector-effect: non-scaling-stroke;
+}
+
+.accurate-court .net-mesh {
+  stroke: rgba(7, 17, 31, 0.65);
+  stroke-width: 4;
+}
+
+.accurate-court .zone-label {
+  fill: rgba(255, 255, 255, 0.76);
+  font-family: "Inter", sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.court-specs {
+  position: absolute;
+  top: 25px;
+  right: 26px;
+  z-index: 7;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.court-specs span {
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: white;
+  background: rgba(7, 17, 31, 0.5);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.court-caption {
+  position: absolute;
+  right: 32px;
+  bottom: 46px;
+  left: 32px;
+  z-index: 6;
+  color: white;
+}
+
+.court-caption strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.05;
+}
+
+.court-caption span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+}
+
+.lvl-ball {
+  position: absolute;
+  top: 46%;
+  left: 52%;
+  z-index: 5;
+  width: 88px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(-14deg);
+  filter: drop-shadow(0 15px 14px rgba(0, 0, 0, 0.3));
+  animation: lvl-ball-float 4.2s ease-in-out infinite;
+}
+
+@keyframes lvl-ball-float {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-14deg) translateY(0); }
+  50% { transform: translate(-50%, -50%) rotate(10deg) translateY(-13px); }
+}
+
+.audience {
+  position: relative;
+  overflow: hidden;
+  background: var(--lvl-navy);
+  color: white;
+}
+
+.audience::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.audience .section-heading,
+.audience-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.audience .eyebrow,
+.mindset .eyebrow,
+.coach-lab .eyebrow,
+.badges-section .eyebrow {
+  color: var(--lvl-lime);
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.audience-card {
+  min-height: 260px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.audience-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--lvl-lime);
+  background: rgba(201, 243, 29, 0.08);
+}
+
+.audience-card > span {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 38px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--lvl-navy);
+  background: var(--lvl-lime);
+  font-weight: 900;
+}
+
+.audience-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.35rem;
+}
+
+.audience-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.motion-story {
+  background: var(--lvl-navy);
+  color: white;
+}
+
+.story-court.lvl-story-court {
+  aspect-ratio: 2 / 1;
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 30px;
+  background: var(--lvl-navy);
+}
+
+.story-court-svg {
+  position: absolute;
+  inset: 8%;
+  width: 84%;
+  height: 84%;
+}
+
+.story-court-svg .court-floor { fill: #286cf2; stroke: white; stroke-width: 10; }
+.story-court-svg .front-zone { fill: rgba(201, 243, 29, 0.14); }
+.story-court-svg .court-line { stroke: white; stroke-width: 9; }
+.story-court-svg .net-line { stroke: var(--lvl-lime); stroke-width: 15; }
+
+.story-status {
+  z-index: 8;
+}
+
+.story-ball {
+  z-index: 7;
+}
+
+.mindset {
+  background: linear-gradient(135deg, #0a1729, #111f34 60%, #17315a);
+  color: white;
+}
+
+.mindset-grid {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 78px;
+  align-items: start;
+}
+
+.mindset .section-heading p:last-child {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.principles {
+  display: grid;
+  gap: 14px;
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.principle > span {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--lvl-navy);
+  background: var(--lvl-lime);
+  font-family: "Archivo Black", sans-serif;
+}
+
+.principle h3 { margin-bottom: 6px; }
+.principle p { margin: 0; color: rgba(255, 255, 255, 0.66); }
+
+.pain-safety-note {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--lvl-lime);
+  color: rgba(255, 255, 255, 0.76);
+  background: rgba(201, 243, 29, 0.08);
+  font-size: 0.9rem;
+}
+
+.service-row .service-tag {
+  display: inline-flex;
+  margin-bottom: 7px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--lvl-navy);
+  background: var(--lvl-lime);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.coach-lab {
+  color: white;
+  background: var(--lvl-blue);
+}
+
+.coach-lab-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.coach-lab-panel {
+  padding: 34px;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 28px;
+  background: rgba(7, 17, 31, 0.18);
+}
+
+.coach-lab-panel h3 { font-size: 1.65rem; }
+.coach-lab-panel ul {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 30px;
+  padding-left: 20px;
+}
+
+.coach-lab .button-secondary {
+  border-color: white;
+  color: white;
+}
+
+.coach-lab .button-secondary::before {
+  background: white;
+}
+
+.coach-lab .button-secondary:hover {
+  color: var(--lvl-navy);
+}
+
+.sliding-scale {
+  display: grid;
+  grid-template-columns: 1.2fr auto;
+  gap: 30px;
+  align-items: center;
+  margin-top: 30px;
+  padding: 28px 30px;
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  background: var(--lvl-lime);
+}
+
+.sliding-scale h3 { margin-bottom: 7px; }
+.sliding-scale p { margin: 0; max-width: 760px; }
+
+.badges-section {
+  color: white;
+  background: var(--lvl-navy);
+}
+
+.badge-path {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.lvl-badge {
+  position: relative;
+  min-height: 245px;
+  padding: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.lvl-badge::after {
+  position: absolute;
+  right: -45px;
+  bottom: -45px;
+  width: 125px;
+  height: 125px;
+  content: "";
+  border: 18px solid rgba(201, 243, 29, 0.1);
+  border-radius: 50%;
+}
+
+.lvl-badge .badge-icon {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 34px;
+  place-items: center;
+  border: 2px solid var(--lvl-lime);
+  border-radius: 16px;
+  color: var(--lvl-lime);
+  font-family: "Archivo Black", sans-serif;
+}
+
+.lvl-badge h3 { margin-bottom: 8px; }
+.lvl-badge p { margin: 0; color: rgba(255, 255, 255, 0.62); font-size: 0.9rem; }
+
+.badge-disclaimer {
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.9rem;
+}
+
+.price-card.coach-price {
+  background: #e9eef9;
+}
+
+.price-card.mechanics-price {
+  background: #eef7c9;
+}
+
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.contact-form .form-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+
+.contact-form .form-check-row input {
+  width: auto;
+  margin-top: 4px;
+}
+
+.contact-form .form-check-row span {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.form-helper {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.faq {
+  background: #eef2f8;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 70px;
+}
+
+.faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.faq-item summary {
+  position: relative;
+  padding: 20px 54px 20px 22px;
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  content: "+";
+  transform: translateY(-50%);
+  color: var(--lvl-blue);
+  font-size: 1.5rem;
+}
+
+.faq-item[open] summary::after { content: "−"; }
+
+.faq-item p {
+  margin: 0;
+  padding: 0 22px 22px;
+  color: var(--muted);
+}
+
+/* Compatibility overrides for the existing scroll-story component */
+.motion-story .section-heading > p:last-child,
+.audience .section-heading > p:last-child,
+.coach-lab .section-heading > p:last-child,
+.badges-section .section-heading > p:last-child {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.story-court.lvl-story-court::before {
+  display: none;
+}
+
+.story-ball {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.story-ball::before,
+.story-ball::after,
+.story-ball > i {
+  display: none;
+}
+
+.story-ball-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(7px 10px 0 rgba(7, 17, 31, 0.22));
+}
+
+@media (max-width: 1100px) {
+  .audience-grid { grid-template-columns: repeat(2, 1fr); }
+  .badge-path { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 980px) {
+  .mindset-grid,
+  .coach-lab-grid,
+  .faq-grid { grid-template-columns: 1fr; }
+  .accurate-court-wrap { inset: 65px 30px 130px; }
+}
+
+@media (max-width: 720px) {
+  .brand-copy small { display: none; }
+  .audience-grid,
+  .badge-path,
+  .contact-form .form-row,
+  .sliding-scale { grid-template-columns: 1fr; }
+  .court-card.lvl-court-card { min-height: 440px; }
+  .accurate-court-wrap { inset: 78px 18px 135px; }
+  .court-specs { left: 18px; right: 18px; justify-content: flex-start; }
+  .lvl-ball { width: 62px; }
+  .story-court.lvl-story-court { aspect-ratio: 1.35 / 1; }
+  .audience-card { min-height: 0; }
+  .lvl-badge { min-height: 0; }
+}
