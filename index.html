@@ -7,6 +7,7 @@
       name="description"
       content="Private volleyball training, team clinics, and video review in the Milwaukee area with Coach Josiah, a longtime player and former MGVA Player Development Director."
     />
+    <meta name="theme-color" content="#10120f" />
     <title>Coach Ziah Volleyball | Train With Purpose</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,6 +18,11 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true">
+      <span class="scroll-progress-line"></span>
+      <span class="scroll-progress-ball"><i></i></span>
+    </div>
+
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Coach Ziah Volleyball home">
         <span class="brand-mark">Z</span>
@@ -33,26 +39,31 @@
 
     <main id="top">
       <section class="hero section-shell">
-        <div class="hero-copy reveal">
-          <p class="eyebrow">Milwaukee-area volleyball coaching</p>
-          <h1>Read faster.<br />Move cleaner.<br /><span>Own the next ball.</span></h1>
-          <p class="hero-lead">
+        <div class="hero-copy">
+          <p class="eyebrow hero-enter" style="--enter-delay: 0ms">Milwaukee-area volleyball coaching</p>
+          <h1 aria-label="Read faster. Move cleaner. Own the next ball.">
+            <span class="headline-line hero-enter" style="--enter-delay: 80ms">Read faster.</span>
+            <span class="headline-line hero-enter" style="--enter-delay: 160ms">Move cleaner.</span>
+            <span class="headline-line hero-enter accent-line" style="--enter-delay: 240ms">Own the next ball.</span>
+          </h1>
+          <p class="hero-lead hero-enter" style="--enter-delay: 320ms">
             Technical volleyball training built around the part most players miss: seeing the game early enough to make the right play feel automatic.
           </p>
-          <div class="hero-actions">
-            <a href="#contact" class="button button-primary">Schedule training</a>
+          <div class="hero-actions hero-enter" style="--enter-delay: 400ms">
+            <a href="#contact" class="button button-primary magnetic">Schedule training <span aria-hidden="true">↗</span></a>
             <a href="#pricing" class="button button-secondary">View pricing</a>
           </div>
-          <div class="hero-proof" aria-label="Coaching experience highlights">
-            <div><strong>20+ years</strong><span>playing volleyball</span></div>
-            <div><strong>5 years</strong><span>playing at UWM</span></div>
-            <div><strong>2.5 years</strong><span>leading player development</span></div>
+          <div class="hero-proof hero-enter" style="--enter-delay: 480ms" aria-label="Coaching experience highlights">
+            <div><strong><span data-count="20">20</span>+ years</strong><span>playing volleyball</span></div>
+            <div><strong><span data-count="5">5</span> years</strong><span>playing at UWM</span></div>
+            <div><strong><span data-count="2.5">2.5</span> years</strong><span>leading player development</span></div>
             <div><strong>All stages</strong><span>beginner to competitive</span></div>
           </div>
         </div>
 
-        <div class="hero-visual reveal">
-          <div class="court-card">
+        <div class="hero-visual hero-enter" style="--enter-delay: 280ms" data-depth="0.08">
+          <div class="court-card interactive-tilt">
+            <div class="court-glow" aria-hidden="true"></div>
             <div class="court-lines" aria-hidden="true">
               <span class="net"></span>
               <span class="attack attack-one"></span>
@@ -61,53 +72,119 @@
             <div class="player-orbit orbit-one">READ</div>
             <div class="player-orbit orbit-two">MOVE</div>
             <div class="player-orbit orbit-three">CONTROL</div>
-            <div class="volleyball" aria-hidden="true"><span></span></div>
+            <div class="volleyball hero-ball" aria-hidden="true"><span></span></div>
             <p>Training that connects technique, decision-making, and confidence.</p>
+          </div>
+        </div>
+
+        <a class="scroll-cue" href="#game-plan" aria-label="Scroll to see the coaching approach">
+          <span>Scroll to train smarter</span><i aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <section class="ticker" aria-label="Training focus areas">
+        <div class="ticker-track">
+          <div class="ticker-group">
+            <span>Serve Receive</span><span>Defense</span><span>Serving</span><span>Footwork</span><span>Reading Hitters</span><span>Out-of-System Play</span><span>Game IQ</span>
+          </div>
+          <div class="ticker-group" aria-hidden="true">
+            <span>Serve Receive</span><span>Defense</span><span>Serving</span><span>Footwork</span><span>Reading Hitters</span><span>Out-of-System Play</span><span>Game IQ</span>
           </div>
         </div>
       </section>
 
-      <section class="ticker" aria-label="Training focus areas">
-        <div>
-          <span>Serve Receive</span><span>Defense</span><span>Serving</span><span>Footwork</span><span>Reading Hitters</span><span>Out-of-System Play</span><span>Game IQ</span>
+      <section id="game-plan" class="motion-story section-pad">
+        <div class="section-shell motion-story-grid">
+          <div class="story-visual-wrap">
+            <div class="story-visual" aria-hidden="true">
+              <div class="story-court">
+                <span class="story-net"></span>
+                <span class="story-attack"></span>
+                <span class="story-target"></span>
+                <span class="story-ball"><i></i></span>
+                <span class="story-player player-a"></span>
+                <span class="story-player player-b"></span>
+                <span class="story-player player-c"></span>
+                <div class="story-status">
+                  <span class="story-kicker">THE NEXT BALL</span>
+                  <strong id="story-status-text">READ IT EARLY</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-copy">
+            <div class="section-heading reveal" data-reveal="left">
+              <p class="eyebrow">The coaching approach</p>
+              <h2>Technique matters. Timing makes it usable.</h2>
+              <p>I build the skill, then connect it to the read that tells you when and why to use it.</p>
+            </div>
+
+            <article class="story-step is-active" data-story-step="0">
+              <span>01</span>
+              <div>
+                <p class="story-label">READ</p>
+                <h3>See the play before the ball arrives.</h3>
+                <p>Track the server, setter, hitter, block, and available space so movement starts from information instead of panic.</p>
+              </div>
+            </article>
+
+            <article class="story-step" data-story-step="1">
+              <span>02</span>
+              <div>
+                <p class="story-label">MOVE</p>
+                <h3>Arrive balanced enough to make choices.</h3>
+                <p>Footwork is not just speed. It is getting your body behind the ball while preserving control and multiple options.</p>
+              </div>
+            </article>
+
+            <article class="story-step" data-story-step="2">
+              <span>03</span>
+              <div>
+                <p class="story-label">CONTROL</p>
+                <h3>Turn contact into a repeatable outcome.</h3>
+                <p>Own the platform, angle, tempo, and decision so the next touch becomes easier for your team.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
       <section id="about" class="about section-shell section-pad">
-        <div class="section-heading reveal">
+        <div class="section-heading reveal" data-reveal="up">
           <p class="eyebrow">What I bring to the table</p>
           <h2>A lifetime of playing, developing players, and learning how different athletes improve.</h2>
           <p>
             Volleyball has been part of my life since middle school. I have experienced the game as a setter, libero, collegiate player, player-development leader, teammate, tournament competitor, and coach. That range helps me understand both what a player needs to do and how to explain it in a way that actually clicks.
           </p>
         </div>
-        <div class="about-grid">
-          <article class="feature-card reveal">
+        <div class="about-grid stagger-group">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>01</span>
             <h3>Experience across positions and levels</h3>
             <p>I started playing in middle school, set for my high school team, played libero in club, and continued playing for five years at UWM. That gives me a setter's view of court organization and a libero's understanding of first contact, defense, and reading the game.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>02</span>
             <h3>Player development leadership</h3>
             <p>I served for two and a half years on the Milwaukee Gay Volleyball Association board as Player Development Director, helping create opportunities for players to learn, improve, and become more confident competitors.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>03</span>
             <h3>Proven beginner development</h3>
             <p>I have successfully coached players and teams from zero experience to competent, confident volleyball. I meet athletes where they are, identify the next skill that matters, and build progress without overwhelming them.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>04</span>
             <h3>Competitive results</h3>
             <p>After countless matches and tournaments, I understand what holds up under pressure. I have coached adult-league athletes and teams who went on to win medals, not just look better during drills.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>05</span>
             <h3>Coaching that adapts to the athlete</h3>
             <p>Different players need different cues, progressions, and levels of challenge. My goal is not to force everyone into one template. It is to understand where you are, where you want to go, and what will move you forward fastest.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card reveal interactive-tilt" data-reveal="up">
             <span>06</span>
             <h3>An honest network for specialized goals</h3>
             <p>Good coaching includes knowing when an athlete needs a different specialty. When a goal falls outside what I can deliver at the right level, I can connect or collaborate with experienced and professional volleyball players in my network.</p>
@@ -116,8 +193,9 @@
       </section>
 
       <section id="training" class="services section-pad">
+        <div class="services-orbit" aria-hidden="true">TRAIN WITH PURPOSE • TRAIN WITH PURPOSE •</div>
         <div class="section-shell">
-          <div class="section-heading split-heading reveal">
+          <div class="section-heading split-heading reveal" data-reveal="up">
             <div>
               <p class="eyebrow">Training options</p>
               <h2>Choose the problem. We build the reps.</h2>
@@ -126,39 +204,43 @@
           </div>
 
           <div class="service-list">
-            <article class="service-row reveal">
+            <article class="service-row reveal" data-reveal="left">
               <div class="service-number">01</div>
               <div><h3>Private training</h3><p>Focused one-on-one work for technical changes, confidence, tryout preparation, or position-specific development.</p></div>
               <ul><li>60 minutes</li><li>Customized progression</li><li>Post-session action plan</li></ul>
+              <span class="service-arrow" aria-hidden="true">↗</span>
             </article>
-            <article class="service-row reveal">
+            <article class="service-row reveal" data-reveal="right">
               <div class="service-number">02</div>
               <div><h3>Small-group training</h3><p>High-rep sessions for friends, teammates, or positional groups who want individual feedback with live reads and competition.</p></div>
               <ul><li>2 to 6 athletes</li><li>Skill or position focus</li><li>Competitive constraints</li></ul>
+              <span class="service-arrow" aria-hidden="true">↗</span>
             </article>
-            <article class="service-row reveal">
+            <article class="service-row reveal" data-reveal="left">
               <div class="service-number">03</div>
               <div><h3>Team clinic</h3><p>A targeted practice built around a team need such as first contact, floor defense, serving pressure, transition, or system execution.</p></div>
               <ul><li>90 or 120 minutes</li><li>Coach consultation</li><li>Practice recap</li></ul>
+              <span class="service-arrow" aria-hidden="true">↗</span>
             </article>
-            <article class="service-row reveal">
+            <article class="service-row reveal" data-reveal="right">
               <div class="service-number">04</div>
               <div><h3>Video review</h3><p>Timestamped technical and tactical feedback with the highest-impact corrections prioritized into an actionable drill plan.</p></div>
               <ul><li>Skill clips or match film</li><li>Voice-over breakdown</li><li>48-hour target turnaround</li></ul>
+              <span class="service-arrow" aria-hidden="true">↗</span>
             </article>
           </div>
         </div>
       </section>
 
       <section id="pricing" class="pricing section-shell section-pad">
-        <div class="section-heading reveal">
+        <div class="section-heading reveal" data-reveal="up">
           <p class="eyebrow">Simple pricing</p>
           <h2>Serious coaching without club-level overhead.</h2>
           <p class="pricing-note">Court rental, when required, is quoted separately so you only pay for what the session actually needs.</p>
         </div>
 
-        <div class="pricing-grid">
-          <article class="price-card reveal">
+        <div class="pricing-grid stagger-group">
+          <article class="price-card reveal" data-reveal="up">
             <p class="price-label">Private</p>
             <h3><span>$85</span> / session</h3>
             <p>One athlete, 60 minutes</p>
@@ -166,16 +248,16 @@
             <a href="#contact" class="button button-secondary">Book private</a>
           </article>
 
-          <article class="price-card featured reveal">
+          <article class="price-card featured reveal" data-reveal="up">
             <div class="popular">Best value</div>
             <p class="price-label">3-session development pack</p>
             <h3><span>$225</span> total</h3>
             <p>Three 60-minute private sessions</p>
             <ul><li>Baseline and goal setting</li><li>Progressive training plan</li><li>Between-session priorities</li></ul>
-            <a href="#contact" class="button button-primary">Start a training block</a>
+            <a href="#contact" class="button button-primary magnetic">Start a training block</a>
           </article>
 
-          <article class="price-card reveal">
+          <article class="price-card reveal" data-reveal="up">
             <p class="price-label">Small group</p>
             <h3><span>$40</span> / athlete</h3>
             <p>2 to 4 athletes, 60 minutes</p>
@@ -183,7 +265,7 @@
             <a href="#contact" class="button button-secondary">Train together</a>
           </article>
 
-          <article class="price-card reveal">
+          <article class="price-card reveal" data-reveal="up">
             <p class="price-label">Team training</p>
             <h3><span>$275</span> / clinic</h3>
             <p>Up to 14 athletes, 90 minutes</p>
@@ -191,7 +273,7 @@
             <a href="#contact" class="button button-secondary">Plan a clinic</a>
           </article>
 
-          <article class="price-card reveal">
+          <article class="price-card reveal" data-reveal="up">
             <p class="price-label">Skill video review</p>
             <h3><span>$55</span> / review</h3>
             <p>Up to 8 minutes of submitted clips</p>
@@ -199,7 +281,7 @@
             <a href="#contact" class="button button-secondary">Submit video</a>
           </article>
 
-          <article class="price-card reveal">
+          <article class="price-card reveal" data-reveal="up">
             <p class="price-label">Team film review</p>
             <h3><span>$175</span> / match</h3>
             <p>One full match, coach-facing analysis</p>
@@ -210,21 +292,22 @@
       </section>
 
       <section class="process section-pad">
+        <div class="process-ball" aria-hidden="true"><i></i></div>
         <div class="section-shell process-grid">
-          <div class="section-heading reveal">
+          <div class="section-heading reveal" data-reveal="left">
             <p class="eyebrow">How it works</p>
             <h2>Less guessing. Better reps. Visible progress.</h2>
           </div>
-          <ol class="process-list">
-            <li class="reveal"><span>1</span><div><h3>Tell me what is not working</h3><p>Share the athlete's level, position, goals, and the skill or game situation causing frustration.</p></div></li>
-            <li class="reveal"><span>2</span><div><h3>Get a focused training plan</h3><p>I design the session around the highest-impact correction instead of cramming ten disconnected drills into an hour.</p></div></li>
-            <li class="reveal"><span>3</span><div><h3>Leave knowing what comes next</h3><p>You get clear cues and a practice priority that can be repeated between sessions.</p></div></li>
+          <ol class="process-list stagger-group">
+            <li class="reveal" data-reveal="right"><span>1</span><div><h3>Tell me what is not working</h3><p>Share the athlete's level, position, goals, and the skill or game situation causing frustration.</p></div></li>
+            <li class="reveal" data-reveal="right"><span>2</span><div><h3>Get a focused training plan</h3><p>I design the session around the highest-impact correction instead of cramming ten disconnected drills into an hour.</p></div></li>
+            <li class="reveal" data-reveal="right"><span>3</span><div><h3>Leave knowing what comes next</h3><p>You get clear cues and a practice priority that can be repeated between sessions.</p></div></li>
           </ol>
         </div>
       </section>
 
       <section id="contact" class="contact section-shell section-pad">
-        <div class="contact-panel reveal">
+        <div class="contact-panel reveal interactive-glow" data-reveal="up">
           <div>
             <p class="eyebrow">Ready to train?</p>
             <h2>Reach out and tell me what you want to improve.</h2>
@@ -259,7 +342,7 @@
               Athlete level, goals, and availability
               <textarea name="message" rows="5" required></textarea>
             </label>
-            <button type="submit" class="button button-primary">Send training request</button>
+            <button type="submit" class="button button-primary magnetic">Send training request <span aria-hidden="true">↗</span></button>
             <p id="form-status" class="form-status" role="status"></p>
           </form>
         </div>
