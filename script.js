@@ -2,6 +2,9 @@ const root = document.documentElement;
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
 const siteHeader = document.querySelector('.site-header');
+const progressLine = document.querySelector('.scroll-progress-line');
+const progressBall = document.querySelector('.scroll-progress-ball');
+const processBall = document.querySelector('.process-ball');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 menuButton?.addEventListener('click', () => {
@@ -47,11 +50,25 @@ function updateScrollEffects() {
   root.style.setProperty('--scroll', progress.toFixed(4));
   siteHeader?.classList.toggle('scrolled', scrollTop > 28);
 
+  if (progressLine) {
+    progressLine.style.width = '100%';
+    progressLine.style.transform = `scaleX(${progress})`;
+  }
+
+  if (progressBall) {
+    progressBall.style.left = `${progress * 100}%`;
+    progressBall.style.transform = `translate(-50%, -50%) rotate(${progress * 720}deg)`;
+  }
+
   const process = document.querySelector('.process');
   if (process) {
     const rect = process.getBoundingClientRect();
     const processProgress = Math.min(Math.max((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0), 1);
-    process.style.setProperty('--process-progress', processProgress.toFixed(4));
+
+    if (processBall) {
+      processBall.style.left = `${8 + processProgress * 76}%`;
+      processBall.style.transform = `rotate(${processProgress * 540}deg)`;
+    }
   }
 
   document.querySelectorAll('[data-depth]').forEach((element) => {
@@ -78,6 +95,7 @@ window.addEventListener('resize', requestScrollUpdate);
 updateScrollEffects();
 
 const storyCourt = document.querySelector('.story-court');
+const storyBall = document.querySelector('.story-ball');
 const storyStatusText = document.querySelector('#story-status-text');
 const storySteps = [...document.querySelectorAll('[data-story-step]')];
 const storyStates = [
@@ -88,12 +106,12 @@ const storyStates = [
 
 function setStoryStage(stage) {
   const state = storyStates[stage];
-  if (!storyCourt || !state) return;
+  if (!storyCourt || !storyBall || !storyStatusText || !state) return;
 
   storyCourt.dataset.stage = String(stage);
-  storyCourt.style.setProperty('--ball-x', state.x);
-  storyCourt.style.setProperty('--ball-y', state.y);
-  storyCourt.style.setProperty('--ball-rotate', state.rotate);
+  storyBall.style.setProperty('--ball-x', state.x);
+  storyBall.style.setProperty('--ball-y', state.y);
+  storyBall.style.setProperty('--ball-rotate', state.rotate);
   storyStatusText.textContent = state.label;
   storySteps.forEach((step, index) => step.classList.toggle('is-active', index === stage));
 }
