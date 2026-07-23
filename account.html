@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create or open an LVL Up volleyball athlete or coach profile." />
+    <meta name="theme-color" content="#07111f" />
+    <title>LVL Up Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="account.css" />
+  </head>
+  <body class="account-page">
+    <header class="account-header account-shell">
+      <a class="account-brand" href="index.html" aria-label="LVL Up home">
+        <span class="account-brand-mark">LVL</span>
+        <span class="account-brand-copy"><strong>LVL Up</strong><small>with Josiah</small></span>
+      </a>
+      <a class="account-back-link" href="index.html">Back to coaching</a>
+    </header>
+
+    <main class="account-main account-shell">
+      <section class="account-intro">
+        <p class="eyebrow">Your development hub</p>
+        <h1>Make your progress visible.</h1>
+        <p>Organize your goals, coaching priorities, earned badges, session history, and the next skill that deserves your attention.</p>
+        <div class="demo-notice"><strong>Demo mode</strong><span>This experience stores a profile only in this browser. It is not secure authentication and does not transmit your data. Production accounts require the backend setup included in the repository.</span></div>
+      </section>
+
+      <section class="account-layout">
+        <div class="account-panel">
+          <div class="account-tabs" role="tablist" aria-label="Account options">
+            <button class="account-tab is-active" type="button" data-tab="signin" role="tab" aria-selected="true">Sign in</button>
+            <button class="account-tab" type="button" data-tab="create" role="tab" aria-selected="false">Create profile</button>
+          </div>
+
+          <div class="account-panel-inner">
+            <form id="signin-form" class="account-form" data-panel="signin">
+              <h2>Welcome back.</h2>
+              <p>Open the demo profile saved in this browser.</p>
+              <label>Email address<input type="email" name="email" autocomplete="email" required /></label>
+              <label>Password<input type="password" name="password" autocomplete="current-password" required /></label>
+              <p class="account-status" id="signin-status" role="status"></p>
+              <button class="account-button" type="submit">Open my profile <span aria-hidden="true">↗</span></button>
+            </form>
+
+            <form id="create-form" class="account-form" data-panel="create" hidden>
+              <h2>Create your LVL profile.</h2>
+              <p>Start with the details that help make coaching more personal and useful.</p>
+
+              <div class="account-form-grid">
+                <label>Full name<input type="text" name="name" autocomplete="name" required /></label>
+                <label>Email address<input type="email" name="email" autocomplete="email" required /></label>
+              </div>
+
+              <div class="account-form-grid">
+                <label>Phone number<input type="tel" name="phone" autocomplete="tel" /></label>
+                <label>Profile type<select name="role" required><option value="">Choose one</option><option value="player">Player</option><option value="parent">Parent or guardian</option><option value="coach">Coach</option><option value="team">Team organizer</option></select></label>
+              </div>
+
+              <div class="account-form-grid">
+                <label>Age range<select name="ageRange" required><option value="">Choose one</option><option value="under13">Under 13</option><option value="13to17">13 to 17</option><option value="adult">Adult</option><option value="coach">Coach or staff</option></select></label>
+                <label>Volleyball experience<select name="experience" required><option value="">Choose one</option><option value="new">Completely new</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="competitive">Competitive</option><option value="advanced">College or advanced adult</option><option value="coach">Coach</option></select></label>
+              </div>
+
+              <div class="account-form-grid">
+                <label>Primary position<select name="position"><option value="Not selected">Not selected</option><option>Setter</option><option>Libero or defensive specialist</option><option>Outside hitter</option><option>Opposite</option><option>Middle blocker</option><option>Serving specialist</option><option>All around or learning</option><option>Coach</option></select></label>
+                <label>Primary focus<select name="focus" required><option value="">Choose one</option><option>Foundations</option><option>Serve receive</option><option>Defense</option><option>Serving</option><option>Attacking</option><option>Setting</option><option>Game IQ</option><option>Mechanics and arm stress</option><option>Confidence and accountability</option><option>Coach development</option></select></label>
+              </div>
+
+              <label>What do you want to change first?<textarea name="goal" rows="4" required></textarea></label>
+
+              <div id="guardian-fields" class="guardian-fields" hidden>
+                <label>Parent or guardian name<input type="text" name="guardianName" /></label>
+                <label>Parent or guardian email<input type="email" name="guardianEmail" /></label>
+              </div>
+
+              <label class="account-check"><input type="checkbox" name="consent" required /><span>I understand this is a local demo profile and not a secure production account.</span></label>
+              <p class="account-status" id="create-status" role="status"></p>
+              <button class="account-button" type="submit">Create demo profile <span aria-hidden="true">↗</span></button>
+            </form>
+
+            <section id="account-dashboard" class="account-dashboard" hidden aria-live="polite">
+              <div class="dashboard-top">
+                <span class="dashboard-avatar" id="dashboard-avatar">LV</span>
+                <div class="dashboard-heading"><h2 id="dashboard-name">Your profile</h2><p id="dashboard-subtitle">Volleyball athlete</p></div>
+                <div class="dashboard-actions"><button type="button" id="edit-profile">Edit</button><button type="button" id="sign-out">Sign out</button></div>
+              </div>
+
+              <div class="dashboard-level">
+                <div class="dashboard-level-top"><div><small>CURRENT LVL</small><br /><strong id="dashboard-level-name">Foundation</strong></div><span id="dashboard-level-number">LVL 1</span></div>
+                <div class="dashboard-progress"><span id="dashboard-progress-bar" style="width:24%"></span></div>
+              </div>
+
+              <div class="dashboard-grid">
+                <article class="dashboard-card"><h3>Current focus</h3><p id="dashboard-focus">Build repeatable movement.</p></article>
+                <article class="dashboard-card"><h3>Primary goal</h3><p id="dashboard-goal">Add your first development goal.</p></article>
+                <article class="dashboard-card"><h3>Upcoming session</h3><p>No session booked yet. Use the booking link to request your next training block.</p></article>
+                <article class="dashboard-card"><h3>Latest coaching note</h3><p>Your first feedback note will appear here after a session or video review.</p></article>
+                <article class="dashboard-card full"><h3>LVL badges</h3><div class="dashboard-badges"><span class="dashboard-badge">F</span><span class="dashboard-badge locked">R</span><span class="dashboard-badge locked">C</span><span class="dashboard-badge locked">T</span><span class="dashboard-badge locked">L</span></div></article>
+                <article class="dashboard-card full"><h3>Next checkpoints</h3><ul class="dashboard-goals"><li>Complete an initial training or film assessment</li><li>Choose one measurable technical priority</li><li>Retest the priority in a game-speed context</li></ul></article>
+              </div>
+
+              <a class="account-button" href="index.html#contact">Request a session <span aria-hidden="true">↗</span></a>
+            </section>
+          </div>
+        </div>
+
+        <aside class="account-side">
+          <article class="account-side-card dark"><h3>What belongs in a profile?</h3><p>Only information that helps coach the athlete more clearly, track progress honestly, and reduce the need to start from zero every session.</p><ul class="account-side-list"><li><span>1</span>Goals and current priorities</li><li><span>2</span>Session and feedback history</li><li><span>3</span>Earned and upcoming badges</li><li><span>4</span>Mechanics and workload notes</li></ul></article>
+          <article class="account-side-card"><h3>Built for athletes and coaches</h3><p>Players can track development. Parents can manage a youth profile. Coaches can organize team problems, practice priorities, and consultation notes.</p></article>
+          <article class="account-side-card"><h3>Privacy before features</h3><p>Production accounts should use secure authentication, role-based access, guardian controls for minors, and database policies that prevent profiles from being viewed by the wrong person.</p></article>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="account-footer account-shell">© <span id="account-year"></span> LVL Up Volleyball. Demo profiles remain on this device only.</footer>
+    <script src="account.js"></script>
+  </body>
+</html>
