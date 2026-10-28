@@ -61,7 +61,7 @@ function rebrandSite() {
       <a href="#coach-lab">For Coaches</a>
       <a href="#mindset">Mindset</a>
       <a href="#pricing">Pricing</a>
-      <a href="#contact" class="nav-cta">Start Your LVL</a>`;
+      <a href="index.html" class="nav-cta">Training calendar</a>`;
   }
 
   const hero = document.querySelector('.hero');
