@@ -1,58 +1,46 @@
-# LVL Up Volleyball
+# LVL Up
+A mobile-friendly, calendar-first training site. Annex is the confirmed venue: **one court, maximum 18 participants per training day**.
 
-A responsive volleyball coaching website for athletes of all ages, parents, teams, and coaches in the Milwaukee area, with remote video and coach consultation options.
+## Current status
+- Calendar navigation, expandable details and registration status are implemented.
+- No session dates are supplied. sessions.json intentionally contains an empty array.
+- Google/Apple sign-in and live booking remain **unavailable until configured**.
+- booking-schema.sql is a reviewable, unapplied database setup.
+- Branding and coaching content are retained at coaching.html.
+- account.html is an unrelated browser-only profile demo. It cannot reserve spots.
 
-## Included
+## Run
+Node 22+ and Python 3:
+~~~sh
+npm ci
+npm run build
+python3 -m http.server 8080
+~~~
+Open http://localhost:8080. The disconnected calendar also works without the build. A connected backend requires generated dist/supabase.js; future hosting must run the build and serve that file.
 
-- LVL Up branded landing page
-- Regulation-proportioned volleyball court graphics
-- Private, group, team, mechanics, video-review, and coach-development services
-- Transparent pricing and community-rate sessions
-- Accountability, team culture, and badge progression framework
-- Expanded contact and training intake form
-- Mobile navigation and scroll-driven motion
-- Reduced-motion accessibility support
-- Demo sign-in and create-profile experience
-- Demo athlete or coach dashboard with goals, badges, current focus, and session placeholders
-- Production Supabase/PostgreSQL schema and authentication rollout guide
+## Configure training days
+See [BOOKING_SETUP.md](BOOKING_SETUP.md) for the data contract, database design and staging steps. booking-config.json deliberately has no project credentials or enabled providers.
 
-## Account experience
+Static sessions.json is for confirmed schedule information only. Counts from it are ignored; it cannot register anyone. When connected, the database replaces the static schedule entirely.
 
-Open `account.html` to test the profile flow.
+## Capacity protection
+One database row per Chicago training date. Row-locked registration assigns one of 18 unique seats. Constraints prevent overbooking even when displayed availability becomes stale. Duplicate requests from an account return the same registration. The client cannot write directly to tables or choose another user's ID. Only the server response can confirm a booking.
 
-The current account experience is a front-end demo:
+## Verification
+~~~sh
+npm test
+npm run build
+npm run test:db
+npx playwright install chromium
+python3 -m http.server 8080 --bind 127.0.0.1
+# in another terminal
+npm run test:browser
+~~~
+Without DATABASE_URL, database tests use disposable embedded PostgreSQL and serialize requests. For actual simultaneous connections, use **only a fresh disposable PostgreSQL database**:
+~~~sh
+DATABASE_URL=postgresql://USER:PASSWORD@localhost/EMPTY_TEST_DATABASE npm run test:db
+~~~
+The test creates auth stubs and roles; never target Supabase or production. The GitHub workflow supplies PostgreSQL 16 and runs 30 concurrent requests, requiring exactly 18 successes and 12 full-session rejections.
 
-- It stores one profile in the current browser with localStorage.
-- It does not transmit data.
-- It does not securely authenticate a user.
-- It does not store or verify passwords.
-- It is intended for design review and workflow testing.
-
-See `AUTH_SETUP.md` and `supabase-schema.sql` for the secure production path.
-
-## Run locally
-
-No build tools are required.
-
-```bash
-python -m http.server 8080
-```
-
-Open:
-
-- Main website: `http://localhost:8080`
-- Account demo: `http://localhost:8080/account.html`
-
-## Before public launch
-
-1. Replace `coachziahvolleyball@gmail.com` if a different business email will be used.
-2. Connect a scheduling tool or a custom booking backend.
-3. Connect secure authentication before presenting profiles as real accounts.
-4. Add privacy, terms, cancellation, consent, and guardian policies.
-5. Test the complete site on real phones, tablets, and desktop browsers.
-6. Add original coaching photography and testimonials only with written permission.
-7. Add payments after cancellation, refund, community-rate, and court-rental rules are finalized.
-
-## Hosting
-
-The public marketing site and demo profile can be deployed directly through GitHub Pages, Netlify, Cloudflare Pages, or Vercel. Real accounts require a connected backend such as Supabase.
+## Before activation
+Approve staging/production SQL and deployment separately. Supply confirmed dates/times, configure providers, complete real OAuth and booking acceptance tests, and finalize participant eligibility, consent, privacy and cancellation rules. No payment integration is included.

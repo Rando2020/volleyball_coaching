@@ -1,93 +1,23 @@
-# LVL Up Account Rollout
+# Google and Apple sign-in
+The booking page has a Supabase Auth adapter but **no enabled providers or credentials**. It displays an unavailable message, not pretend login buttons. The old account.html demo does not authenticate anyone.
 
-The repository now includes a polished browser-only account demo and a production database schema. The demo is intentionally labeled as a demo because localStorage is not secure authentication.
+## Minimum integration
+1. Use a business-owned Supabase project. Approval is required before applying booking-schema.sql. Do not run the unrelated legacy supabase-schema.sql as a booking dependency.
+2. Set Supabase Site URL and exact redirect allowlist entries for approved origins, including the deployed path to index.html. The browser uses PKCE and the SDK's callback detection and session exchange.
+3. **Google:** configure a Web OAuth client and consent screen in Google Cloud. Add the Supabase /auth/v1/callback URL as an authorized redirect URI and approved website origins. Store the client ID/secret in Supabase's Google provider settings.
+4. **Apple:** requires an Apple Developer account, a Sign in with Apple-enabled App ID, associated Services ID, verified web domain/return URL and signing key. Configure Apple's provider in Supabase. Maintain web OAuth client secret rotation at least every six months. Never publish the .p8 key or client secret.
+5. Put only the Supabase URL and **publishable** sb_publishable_... key in booking-config.json. Never use secret/service-role credentials. Add "google" and/or "apple" to providers only after each provider is configured and tested. An empty list exposes no provider buttons.
+6. Run npm ci and npm run build to produce the pinned browser SDK at dist/supabase.js. Include it with static hosting. Auth is not provided by the hosting platform.
+7. Test redirect completion, denial, logout, expired sessions, disabled provider errors, registration after login, returning user status, and two independent accounts in staging. Provider configuration cannot be validated by simulated tests.
 
-## Current demo behavior
+## Identity and participant name
+The database uses auth.uid(), not browser-submitted account IDs. Anonymous Supabase users cannot register. The form collects a participant name explicitly, since Apple's web flow may not provide one. This increment supports one participant per authenticated account per training day. Guardian/dependent and group registration are not implemented; finalize eligibility and consent before opening sessions.
 
-- Visitors can open `account.html` from the homepage navigation.
-- Visitors can create one demo profile in their current browser.
-- The profile includes role, age range, experience, position, focus, goal, guardian fields, badge level, and a dashboard preview.
-- No password is stored or verified.
-- No information is sent to a server.
-- Clearing browser storage removes the demo profile.
+## Current limitations
+The SDK persists real auth sessions using its standard browser storage; legacy demo profiles are ignored. Existing profile/badge UI remains a demo. Authentication does not establish age, guardian consent or a coaching relationship.
 
-## Recommended production stack
-
-Use Supabase for the first production release:
-
-- Supabase Auth for email/password and password-reset flows
-- PostgreSQL for profiles, goals, sessions, badges, feedback, and mechanics reviews
-- Row Level Security for profile privacy
-- Supabase Storage later for approved video uploads and profile images
-- A server-side or edge function for coach/admin actions
-
-The database starting point is in `supabase-schema.sql`.
-
-## Production implementation sequence
-
-1. Create a Supabase project owned by the LVL Up business account.
-2. Run `supabase-schema.sql` in the SQL editor.
-3. Configure the site URL and approved redirect URLs.
-4. Add a public Supabase URL and anonymous key through deployment environment variables.
-5. Replace the localStorage adapter in `account.js` with Supabase Auth and table queries.
-6. Add email verification and password reset.
-7. Add a protected coach/admin dashboard.
-8. Add guardian-managed profiles for minors.
-9. Add session requests, confirmations, cancellation rules, and reminders.
-10. Add video upload only after storage limits, consent, deletion, and access rules are defined.
-
-## Roles
-
-### Athlete
-
-- View and edit own profile
-- Manage goals
-- View own badges, sessions, feedback, and mechanics reviews
-- Request training
-
-### Parent or guardian
-
-- Manage approved dependent profiles
-- Book and pay for youth sessions
-- View feedback shared with the dependent profile
-
-### Coach
-
-- View only athletes who explicitly grant access
-- Create coaching notes, feedback, session records, and badge awards
-- Never access unrelated athlete profiles
-
-### Admin
-
-- Manage service definitions, pricing, coach roles, badge definitions, and account support
-- Use server-side permissions rather than browser-only role checks
-
-## Required safeguards before launch
-
-- Privacy policy and terms of service
-- Explicit guardian flow for minors
-- Consent language for video and image uploads
-- Account deletion and data-export process
-- Data-retention rules
-- Role-based access testing
-- Rate limiting and bot protection on registration and password reset
-- No medical records or diagnostic claims inside mechanics reviews
-- No service-role or private API keys in client-side files
-
-## Pragmatic launch plan
-
-### Phase 1
-
-Use the current profile demo for stakeholder review and user testing. Keep booking through the existing contact workflow.
-
-### Phase 2
-
-Connect Supabase Auth, profiles, goals, and badges. Keep session scheduling manual.
-
-### Phase 3
-
-Add coach notes, session history, guardian-managed youth profiles, and protected video review.
-
-### Phase 4
-
-Add payments, automated scheduling, reminders, and deeper progress reporting only after real demand proves those workflows are needed.
+Official references checked during implementation:
+- https://supabase.com/docs/guides/auth/social-sign-in/auth-google
+- https://supabase.com/docs/guides/auth/social-sign-in/auth-apple
+- https://supabase.com/docs/guides/auth/redirect-urls
+- https://supabase.com/docs/guides/database/functions

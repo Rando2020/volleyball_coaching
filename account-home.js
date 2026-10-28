@@ -12,7 +12,7 @@
     const accountLink = document.createElement('a');
     accountLink.href = 'account.html';
     accountLink.className = 'account-nav-link';
-    accountLink.textContent = 'Sign in';
+    accountLink.textContent = 'Profile demo';
     const cta = nav.querySelector('.nav-cta');
     nav.insertBefore(accountLink, cta || null);
   }
@@ -22,7 +22,7 @@
     const profileLink = document.createElement('a');
     profileLink.href = 'account.html';
     profileLink.className = 'button button-secondary profile-hero-link';
-    profileLink.textContent = 'Create your profile';
+    profileLink.textContent = 'Explore profile demo';
     heroActions.appendChild(profileLink);
   }
 
@@ -38,7 +38,7 @@
           <p>Create a profile to organize goals, coaching notes, session history, mechanics priorities, and progress badges. The current version is a transparent demo while secure authentication is connected.</p>
           <div class="profile-preview-actions">
             <a href="account.html#create" class="button button-primary">Create a profile <span aria-hidden="true">↗</span></a>
-            <a href="account.html#signin" class="button button-secondary">Sign in</a>
+            <a href="account.html#signin" class="button button-secondary">Profile demo</a>
           </div>
         </div>
 
