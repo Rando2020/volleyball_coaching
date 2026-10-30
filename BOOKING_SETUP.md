@@ -1,3 +1,7 @@
+# Payment flow supersedes unpaid registration
+
+See [PAYMENT_SETUP.md](PAYMENT_SETUP.md). The payment upgrade supports guest checkout, counts pending holds toward capacity and disables the previous unpaid registration RPC. Both baseline and payment SQL scripts remain unapplied.
+
 # Annex booking setup
 **Review only. No production database changes or deployment are authorized by this change.**
 

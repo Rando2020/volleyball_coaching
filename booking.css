@@ -20,3 +20,5 @@ h1{font:clamp(2.8rem,6vw,4.6rem)/1.02 'Archivo Black',sans-serif;letter-spacing:
 .help{font-size:14px;margin:26px 0 40px}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:12px}.skip-link{position:absolute;left:16px;top:-80px;background:white;padding:12px;z-index:1}.skip-link:focus{top:10px}.notice{padding:16px;background:var(--lime)}
 @media(max-width:720px){.booking-layout{grid-template-columns:1fr}.intro{padding-top:32px}.account-panel{align-items:stretch;flex-direction:column;gap:14px}nav{gap:12px;font-size:12px}.calendar-panel,.session-panel,.account-panel{padding:20px}.shell{width:calc(100% - 28px)}.weekdays,.days{gap:3px}.day{min-height:44px}h2{font-size:19px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+#booking-history:not(:empty){background:white;border:1px solid var(--line);border-radius:22px;margin-top:24px;padding:24px}.history-row{padding:12px 0;border-bottom:1px solid var(--line)}.history-row p{margin:5px 0}

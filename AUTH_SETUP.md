@@ -1,3 +1,7 @@
+# Optional accounts update
+
+Payment now supports guests. Google/Apple accounts are optional and add member history and optional saved payment methods. Apply the payment upgrade only in an approved sandbox; see [PAYMENT_SETUP.md](PAYMENT_SETUP.md). Existing guest bookings are not automatically linked by email. Payment operations accept only verified, non-anonymous account tokens when signing in.
+
 # Google and Apple sign-in
 The booking page has a Supabase Auth adapter but **no enabled providers or credentials**. It displays an unavailable message, not pretend login buttons. The old account.html demo does not authenticate anyone.
 

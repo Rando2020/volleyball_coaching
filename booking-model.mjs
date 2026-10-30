@@ -22,12 +22,14 @@ export function validateSessions(sessions) {
   }
   return sessions;
 }
-export function bookingState(s, connected, signedIn, now = Date.now()) {
+export function bookingState(s, connected, paymentsEnabled, now = Date.now()) {
   if (s.status === 'cancelled') return {label:'Session cancelled', canBook:false};
   if (s.is_registered) return {label:'Registered', canBook:false};
   if (Date.parse(s.starts_at) <= now) return {label:'Session started', canBook:false};
   if (s.status !== 'open') return {label:'Registration closed', canBook:false};
   if (!connected || s.registered == null) return {label:'Registration unavailable', canBook:false};
   if (s.registered >= 18) return {label:'Full', canBook:false};
-  return {label:signedIn ? 'Register for this day' : 'Sign in to register', canBook:signedIn};
+  if (!paymentsEnabled) return {label:'Online payment is not connected yet', canBook:false};
+  if (!Number.isInteger(s.price_amount) || s.price_amount <= 0 || s.currency !== 'usd') return {label:'Price not published', canBook:false};
+  return {label:'Pay and register', canBook:true};
 }
