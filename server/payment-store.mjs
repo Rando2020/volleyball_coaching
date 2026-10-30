@@ -27,8 +27,8 @@ export class PaymentStore {
    return {...order,title:session.title};
   });
  }
- async byHash(key){return (await this.pool.query('select * from public.annex_registrations where request_hash=$1',[hashKey(key)])).rows[0];}
- async byId(id){return (await this.pool.query('select * from public.annex_registrations where id=$1',[id])).rows[0];}
+ async byHash(key){return (await this.pool.query('select r.*,s.status as session_status,s.starts_at as session_starts_at from public.annex_registrations r join public.annex_sessions s on s.id=r.session_id where request_hash=$1',[hashKey(key)])).rows[0];}
+ async byId(id){return (await this.pool.query('select r.*,s.status as session_status,s.starts_at as session_starts_at from public.annex_registrations r join public.annex_sessions s on s.id=r.session_id where r.id=$1',[id])).rows[0];}
  async attach(id,session){
   const {rows:[row]}=await this.pool.query('update public.annex_registrations set stripe_session_id=$2,checkout_url=$3,checkout_expires_at=to_timestamp($4) where id=$1 and (stripe_session_id is null or stripe_session_id=$2) returning *',[id,session.id,session.url,session.expires_at]);
   if(!row)throw Error('PAYMENT_MISMATCH'); return row;

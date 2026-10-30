@@ -14,6 +14,7 @@ Only a verified server/provider payment result yields confirmation. Browser redi
 - Price and title are captured from the database. A missing price prevents checkout. USD is the current supported currency; amounts are integer cents. No actual prices have been entered.
 - Stripe creation uses a stable idempotency key, allowing retries after uncertain responses without making a second checkout.
 - Sandbox checkout expires after 35 minutes. New checkout closes 36 minutes before the start, keeping the payment window before the session. These timing defaults can be revised before launch.
+- Closing or cancelling a session causes reconciliation to expire its pending Stripe checkouts. A payment that already completed remains recorded for coach review, without inventing an automatic refund policy.
 - Only verified Stripe expiry releases an unpaid seat. A browser timer cannot release it.
 - Signed webhook notifications and the return/status endpoint retrieve current Stripe state, validate checkout ID, metadata, amount, currency and test mode, then persist the result.
 - Duplicate and out-of-order events do not regress a paid booking.

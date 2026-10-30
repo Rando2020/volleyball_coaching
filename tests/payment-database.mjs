@@ -35,7 +35,8 @@ export async function paymentDatabaseTests({pool,embedded}){
      status:'open',payment_status:'unpaid',livemode:false,params};
     sessions.set(session.id,session);return session;
    },
-   retrieve:async id=>sessions.get(id)
+   retrieve:async id=>sessions.get(id),
+   expire:async id=>{const session=sessions.get(id);session.status='expired';return session;}
   }}
  };
  const service=new PaymentService(store,stripe,'http://localhost:8080/');
@@ -87,13 +88,23 @@ export async function paymentDatabaseTests({pool,embedded}){
  assert.equal((await store.history(memberId)).length,1);
  assert.equal((await store.history('00000000-0000-0000-0000-000000000041')).length,0);
  await assert.rejects(service.checkout({...memberInput,requestKey:randomUUID()},{...member,email_confirmed_at:null}),/VERIFIED_ACCOUNT_REQUIRED/);
+
+ // A cancelled training day must not leave a payable pending checkout.
+ await query("update public.annex_sessions set status='cancelled' where id=$1",[sessionId]);
+ const cancelled=await service.status(memberInput.requestKey);
+ assert.equal(cancelled.status,'expired');
+ assert.equal((await store.byId(memberOrder.id)).seat,null);
+ // Reopen only the synthetic fixture, and allocate another member for constraint checks.
+ await query("update public.annex_sessions set status='open' where id=$1",[sessionId]);
+ const newMemberOrder=await store.begin({...memberInput,requestKey:randomUUID(),email:member.email},member);
  // Hard slot constraints still protect capacity even for privileged server writes.
- await assert.rejects(query('update public.annex_registrations set seat=19 where id=$1',[memberOrder.id]),/check constraint/);
- await assert.rejects(query('update public.annex_registrations set seat=$1 where id=$2',[order.seat,memberOrder.id]),/unique constraint/);
- await query('begin');
+ await assert.rejects(query('update public.annex_registrations set seat=19 where id=$1',[newMemberOrder.id]),/check constraint/);
+ await assert.rejects(query('update public.annex_registrations set seat=$1 where id=$2',[order.seat,newMemberOrder.id]),/unique constraint/);
+ const permissionConnection=await adapter.connect();
+ await permissionConnection.query('begin');
  try{
-  await query('set local role authenticated');
-  await assert.rejects(query("select public.register_annex_session($1,'unpaid bypass')",[sessionId]),/permission denied/);
- }finally{await query('rollback');}
+  await permissionConnection.query('set local role authenticated');
+  await assert.rejects(permissionConnection.query("select public.register_annex_session($1,'unpaid bypass')",[sessionId]),/permission denied/);
+ }finally{await permissionConnection.query('rollback');permissionConnection.release();}
  console.log('PASS: '+(pool?'30 concurrent':'30 serial')+' guest holds: 18 accepted; unpaid bypass denied; trusted pricing, verified payment, duplicate delivery, expiry, private status and member history.');
 }

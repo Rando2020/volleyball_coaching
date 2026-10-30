@@ -43,11 +43,18 @@ export class PaymentService {
   order=await this.ensureCheckout(order);
   const current=await this.reconcile(order);
   if(current.status!=='pending')return {status:current.status};
+  if(current.session_status!=='open')throw Error('SESSION_CLOSED');
   return {status:'pending',url:order.checkout_url};
  }
  async reconcile(order) {
   if(!order.stripe_session_id || !['pending','paid'].includes(order.status))return order;
-  const session=await this.stripe.checkout.sessions.retrieve(order.stripe_session_id,{expand:['payment_intent.latest_charge']});
+  order=await this.store.byId(order.id);
+  let session=await this.stripe.checkout.sessions.retrieve(order.stripe_session_id,{expand:['payment_intent.latest_charge']});
+  if(session.status==='open' && (order.session_status!=='open' || new Date(order.session_starts_at)<=new Date())){
+    // Expire at the provider before releasing capacity, including cancellation races.
+    try{await this.stripe.checkout.sessions.expire(session.id);}catch{/* Payment may have completed concurrently. Retrieve before deciding. */}
+    session=await this.stripe.checkout.sessions.retrieve(session.id,{expand:['payment_intent.latest_charge']});
+  }
   const status=paymentTransition(order,session);
   if(status==='paid' || status==='expired')return this.store.transition(order.id,status,session);
   return order;
