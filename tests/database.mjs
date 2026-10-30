@@ -62,4 +62,6 @@ await assert.rejects(book(40),/SESSION_CLOSED/);
 await assert.rejects(asUser(40,"select public.register_annex_session('"+id(999)+"','x')"),/SESSION_NOT_FOUND/);
 await assert.rejects(asUser(40,"select public.register_annex_session('"+day+"',' ')"),/NAME_REQUIRED/);
 console.log(pool ? 'PASS: real PostgreSQL, 30 simultaneous requests, 18 accepted, 12 rejected; retries, auth, privacy and constraints.' : 'PASS: embedded PostgreSQL SQL/security tests; 30 SERIAL requests, 18 accepted. Concurrent connections require DATABASE_URL and CI.');
+const {paymentDatabaseTests}=await import('./payment-database.mjs');
+await paymentDatabaseTests({pool,embedded});
 await pool?.end(); await embedded?.close();

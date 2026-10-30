@@ -1,46 +1,43 @@
-# LVL Up
-A mobile-friendly, calendar-first training site. Annex is the confirmed venue: **one court, maximum 18 participants per training day**.
+# LVL Up: Annex booking
+Mobile calendar for the confirmed Annex venue: one court, maximum 18 participants per training day. Existing LVL branding and coaching content are retained.
 
-## Current status
-- Calendar navigation, expandable details and registration status are implemented.
-- No session dates are supplied. sessions.json intentionally contains an empty array.
-- Google/Apple sign-in and live booking remain **unavailable until configured**.
-- booking-schema.sql is a reviewable, unapplied database setup.
-- Branding and coaching content are retained at coaching.html.
-- account.html is an unrelated browser-only profile demo. It cannot reserve spots.
+## Current branch
+- Optional-account guest checkout. Successful payment is required for confirmation.
+- Members can see booking/payment history and receipts, and optionally save payment methods with Stripe.
+- Dates and prices are intentionally unset.
+- Payments are disabled by default. The included Node runtime accepts Stripe test keys only.
+- No production SQL, deployment or live payment activation has been performed.
+- The old account.html profile demo remains separate from real accounts.
 
 ## Run
-Node 22+ and Python 3:
+Node 22+:
 ~~~sh
 npm ci
 npm run build
-python3 -m http.server 8080
+npm start
 ~~~
-Open http://localhost:8080. The disconnected calendar also works without the build. A connected backend requires generated dist/supabase.js; future hosting must run the build and serve that file.
+Open http://localhost:8080. Without backend configuration, the calendar uses sessions.json for schedule display only and shows registration as unavailable. Static hosting can display the calendar but cannot provide payment APIs.
 
-## Configure training days
-See [BOOKING_SETUP.md](BOOKING_SETUP.md) for the data contract, database design and staging steps. booking-config.json deliberately has no project credentials or enabled providers.
+Read [PAYMENT_SETUP.md](PAYMENT_SETUP.md) for payment lifecycle, sandbox environment, SQL review, operational limits and activation requirements. Read [AUTH_SETUP.md](AUTH_SETUP.md) for Google/Apple configuration.
 
-Static sessions.json is for confirmed schedule information only. Counts from it are ignored; it cannot register anyone. When connected, the database replaces the static schedule entirely.
+## Capacity and payment integrity
+One database row per Chicago training date. Registration and checkout holds use the same 18 unique numbered seats. A row lock serializes competing purchases. Duplicate retries reuse the existing checkout. Prices come from the database, and only verified Stripe state can confirm payment or release expired holds. The old unpaid registration RPC is revoked by the payment SQL upgrade.
 
-## Capacity protection
-One database row per Chicago training date. Row-locked registration assigns one of 18 unique seats. Constraints prevent overbooking even when displayed availability becomes stale. Duplicate requests from an account return the same registration. The client cannot write directly to tables or choose another user's ID. Only the server response can confirm a booking.
+Guest confirmation uses a private random token. Member history is restricted to authenticated account ownership. Guest orders are not attached to accounts merely because emails match. Cards are handled by Stripe.
 
-## Verification
+## Checks
 ~~~sh
 npm test
 npm run build
 npm run test:db
 npx playwright install chromium
-python3 -m http.server 8080 --bind 127.0.0.1
-# in another terminal
 npm run test:browser
 ~~~
-Without DATABASE_URL, database tests use disposable embedded PostgreSQL and serialize requests. For actual simultaneous connections, use **only a fresh disposable PostgreSQL database**:
+The browser suite starts its own disabled-payment Node server and mocks external HTTP services. Database tests use embedded PostgreSQL when DATABASE_URL is absent; requests are then serial. For real concurrent tests, use only a fresh disposable PostgreSQL database:
 ~~~sh
 DATABASE_URL=postgresql://USER:PASSWORD@localhost/EMPTY_TEST_DATABASE npm run test:db
 ~~~
-The test creates auth stubs and roles; never target Supabase or production. The GitHub workflow supplies PostgreSQL 16 and runs 30 concurrent requests, requiring exactly 18 successes and 12 full-session rejections.
+Never point tests at Supabase or real data. GitHub CI runs PostgreSQL 16, including 30 simultaneous guest checkout holds, exactly 18 accepted and 12 rejected.
 
-## Before activation
-Approve staging/production SQL and deployment separately. Supply confirmed dates/times, configure providers, complete real OAuth and booking acceptance tests, and finalize participant eligibility, consent, privacy and cancellation rules. No payment integration is included.
+## Before live activation
+Confirm prices, dates, refund/cancellation and participant policies. Configure Stripe sandbox, Supabase and providers, run real end-to-end payment/auth tests, and approve database/deployment changes separately. Live operation also needs durable reconciliation, monitoring and guest abuse/recovery controls detailed in PAYMENT_SETUP.md.

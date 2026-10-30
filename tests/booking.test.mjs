@@ -11,7 +11,7 @@ test('calendar handles leap February and Sunday alignment', () => {
 test('training date uses Chicago, not browser timezone', () => {
   assert.equal(trainingDay('2026-11-02T00:30:00Z'), '2026-11-01');
 });
-const session = {id:'a', starts_at:'2099-06-01T23:00:00Z', ends_at:'2099-06-02T01:00:00Z', title:'Test fixture', description:'', status:'open', capacity:18, registered:17};
+const session = {id:'a', starts_at:'2099-06-01T23:00:00Z', ends_at:'2099-06-02T01:00:00Z', title:'Test fixture', description:'', status:'open', capacity:18, registered:17, price_amount:1000, currency:'usd'};
 test('unknown availability and disconnected backend cannot offer reservations', () => {
   assert.equal(bookingState(session, false, true).canBook, false);
   assert.equal(bookingState({...session, registered:null}, true, true).canBook, false);

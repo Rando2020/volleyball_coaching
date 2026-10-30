@@ -3,18 +3,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/booking.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "test:browser": "node tests/browser.cjs",
     "test:db": "node tests/database.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "start": "node server/app.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.118.0"
+    "@supabase/supabase-js": "2.118.0",
+    "pg": "8.16.3",
+    "stripe": "23.1.0"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.13",
     "esbuild": "0.25.12",
-    "pg": "8.16.3",
     "playwright": "1.56.1"
   }
 }
